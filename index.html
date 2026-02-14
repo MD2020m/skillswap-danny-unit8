@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js" defer></script>
 </head>
 <body>
     <header>
@@ -46,16 +46,30 @@
         </section>
         <section class="skill-offerings">
             <h1 id="offerings-header">Featured skills</h1>
-            <!--TODO: Implement skill offerings section-->
+            <h2 id="filter-header">Filter skills by category:</h2>
+            <div class="fltr-btn-div">
+                <button class="fltr-btn" id="all-btn">
+                    <p class="fltr-btn-txt">All</p>
+                </button>
+                <button class="fltr-btn" id="math-btn">
+                    <p class="fltr-btn-txt">Mathematics</p>
+                </button>
+                <button class="fltr-btn" id="comp-sci-btn">
+                    <p class="fltr-btn-txt">Computer Science</p>
+                </button>
+                <button class="fltr-btn" id="history-btn">
+                    <p class="fltr-btn-txt">History</p>
+                </button>
+            </div>
             <ul id="offerings-list">
-                <li class="offering-entry">
+                <!--<li class="offering-entry">
                     <div class="skill-card">
                         <h2 class="skl-crd-title">Web Development</h2>
                         <p class="skl-crd-desc">Web development tutoring. Offering help
                             understanding and implementing HTML, CSS, and JavaScript
                         </p>
                         <p class="skl-crd-name">Danny Marshall</p>
-                        <p calss="skl-crd-price">$25/hr</p>
+                        <p class="skl-crd-price">$25/hr</p>
                     </div>
                 </li>
                 <li class="offering-entry">
@@ -94,7 +108,7 @@
                         </p>
                         <p class="skl-crd-name">Danny Marshall</p>
                         <p class="skl-crd-price">$25/hr</p>
-                    </div>
+                    </div>-->
                 </li>
             </ul>
         </section>

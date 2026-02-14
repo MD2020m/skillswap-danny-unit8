@@ -1,4 +1,4 @@
-const skillswap = require('../skillswap');
+const skillswap = require('../skillswap_tojest');
 
 describe('filterSkillsByCategory', () => {
 

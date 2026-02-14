@@ -1,4 +1,4 @@
-export function filterSkillsByCategory(skills, category) {
+function filterSkillsByCategory(skills, category) {
 
     console.log(category);
     const filterResults = category == "All" ? skills : skills.filter(skill => {
@@ -9,17 +9,17 @@ export function filterSkillsByCategory(skills, category) {
 
     console.log(filterResults.length);
     if (filterResults.length == 0) {
-        emptyResults();
+        module.exports.emptyResults();
     }
 
     return filterResults;
 }
 
-export function emptyResults() {
+function emptyResults() {
     console.log('No results match the filter');
 }
 
-/*module.exports = {
+module.exports = {
     filterSkillsByCategory,
     emptyResults
-};*/
+};
