@@ -42,8 +42,11 @@ describe('filterSkillsByCategory', () => {
     });
 
     test('Checks for an empty array when no matches', () => {
+        const emptyResultsSpy = jest.spyOn(skillswap, 'emptyResults');
+
         const filterResults = skillswap.filterSkillsByCategory(testSkills, 'Nothing');
 
         expect(filterResults.length).toBe(0);
+        expect(emptyResultsSpy).toHaveBeenCalled();
     });
 });

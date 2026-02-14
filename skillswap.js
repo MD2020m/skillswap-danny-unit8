@@ -8,7 +8,7 @@ function filterSkillsByCategory(skills, category) {
 
     console.log(filterResults.length);
     if (filterResults.length == 0) {
-        emptyResults();
+        module.exports.emptyResults();
     }
 
     return filterResults;
