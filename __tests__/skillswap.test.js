@@ -1,10 +1,6 @@
-import { filterSkillsByCategory, emptyResults } from "./skillswap";
+const skillswap = require('../skillswap');
 
 describe('filterSkillsByCategory', () => {
-
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
 
     const testSkills = [
         {
@@ -30,27 +26,24 @@ describe('filterSkillsByCategory', () => {
     ]
 
     test('filters skills by category', () => {
-        const filterResults = filterSkillsByCategory(testSkills, 'Mathematics');
+        const filterResults = skillswap.filterSkillsByCategory(testSkills, 'Mathematics');
 
-        expect(length(filterResults)).toBe(2);
+        expect(filterResults.length).toBe(2);
         expect(filterResults[0].id).toBe(3);
         expect(filterResults[1].id).toBe(4);
     });
 
     test('handles "All" category', () => {
-        const allFilterResults = filterSkillsByCategory(testSkills, 'All');
+        const allFilterResults = skillswap.filterSkillsByCategory(testSkills, 'All');
 
-        expect(length(allFilterResults)).toBe(4);
-        expect(filterResults[0].id).toBe(1);
-        expect(filterResults[3].id).toBe(4);
+        expect(allFilterResults.length).toBe(4);
+        expect(allFilterResults[0].id).toBe(1);
+        expect(allFilterResults[3].id).toBe(4);
     });
 
     test('Checks for an empty array when no matches', () => {
-        const emptyResultsSpy = jest.spyOn(skillswap, emptyResults);
+        const filterResults = skillswap.filterSkillsByCategory(testSkills, 'Nothing');
 
-        const filterResults = filterSkillsByCategory(testSkills, 'Nothing');
-
-        expect(length(filterResults)).toBe(0);
-        expect(emptyResultsSpy).toHaveBeenCalled();
+        expect(filterResults.length).toBe(0);
     });
 });
