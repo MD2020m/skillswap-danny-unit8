@@ -61,7 +61,7 @@ function renderSkills(skills) {
     
     skills.forEach(skill => {
     skillList.innerHTML += `
-        <li class="offerings-list">
+        <li class="offering-entry">
             <div class="skill-card">
                 <h2 class="skl-crd-title">${skill.title}</h2>
                 <p class="skl-crd-desc">${skill.description}</p>
