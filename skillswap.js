@@ -19,6 +19,10 @@ export function emptyResults() {
     console.log('No results match the filter');
 }
 
+export function calculateTotalCosts(rate, hrs) {
+    return rate * hrs;
+}
+
 /*module.exports = {
     filterSkillsByCategory,
     emptyResults
