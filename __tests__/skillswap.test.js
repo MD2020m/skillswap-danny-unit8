@@ -95,3 +95,92 @@ describe('calculateTotalCosts', () => {
         expect(result).toBe(cost);
     });
 });
+
+describe('matchSkillsToUser', () => {
+    const skills = [
+        { 
+            title: 'Python Tutoring',
+            category: 'Computer Science',
+            price: 20
+        },
+        {
+            title: 'JavaScript Help',
+            category: 'Computer Science',
+            price: 25
+        },
+        { 
+            title: 'Guitar Lessons',
+            category: 'Music',
+            price: 15
+        },
+        {
+            title: 'Resume Review',
+            category: 'Career',
+            price: 0
+        }
+    ];
+
+    test('matches by category and price', () => {
+        const user1Needs = {
+            category: 'Computer Science',
+            maxPrice: 20
+        };
+
+        const user2Needs = {
+            category: 'Music',
+            maxPrice: 20
+        };
+
+        const user3Needs = {
+            category: 'Computer Science',
+            maxPrice: 100
+        };
+
+        const user1Matches = skillswap.matchSkillsToUser(user1Needs, skills);
+        const user2Matches = skillswap.matchSkillsToUser(user2Needs, skills);
+        const user3Matches = skillswap.matchSkillsToUser(user3Needs, skills);
+
+        expect(user1Matches).toHaveLength(1);
+        expect(user1Matches[0].title).toBe('Python Tutoring');
+
+        expect(user2Matches).toHaveLength(1);
+        expect(user2Matches[0].title).toBe('Guitar Lessons');
+
+        expect(user3Matches).toHaveLength(2);
+        expect(user3Matches[1].title).toBe('JavaScript Help');
+    });
+
+    test('filters by max price', () => {
+        const userNeeds = {
+            category: '',
+            maxPrice: 23
+        };
+
+        const userMatches = skillswap.matchSkillsToUser(userNeeds, skills);
+
+        expect(userMatches.length).toBe(3);
+    });
+
+    test('returns empty array for no matches', () => {
+        const userNeeds = {
+            category: 'Chemistry',
+            maxPrice: 10
+        };
+
+        const userMatches = skillswap.matchSkillsToUser(userNeeds, skills);
+
+        expect(userMatches).toStrictEqual([]);
+    });
+
+    test('includes free skills', () => {
+        const userNeeds = {
+            category: 'Career',
+            maxPrice: 5
+        };
+
+        const userMatches = skillswap.matchSkillsToUser(userNeeds, skills);
+
+        expect(userMatches).toHaveLength(1);
+        expect(userMatches[0].price).toBe(0);
+    })
+});
