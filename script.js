@@ -1,4 +1,4 @@
-import { filterSkillsByCategory, emptyResults } from "./skillswap.js";
+import { filterSkillsByCategory, emptyResults, calculateTotalCosts } from "./skillswap.js";
 let skills = [
     {
         title: 'Web Development',
@@ -46,6 +46,11 @@ fltrBtns.forEach(btn => {
     });
 });
 
+const calcBtn = document.getElementById('calc-btn');
+calcBtn.addEventListener('click', () => {
+    renderCalculation();
+});
+
 skillCards.forEach(card => {
 
     card.addEventListener('mouseover', () => {
@@ -69,5 +74,58 @@ function renderSkills(skills) {
                 <p class="skl-crd-price">${skill.price}</p>
             </div>
         </li>`;
-});
+    });
+}
+
+function renderCalculation() {
+    const calcDiv = document.getElementById('calc-input-div')
+
+    const calcRateInpt = document.getElementById('calc-rate-inpt');
+    //console.log(calcRateInpt);
+    //console.log(calcRateInpt.value);
+    const calcHrsInpt = document.getElementById('calc-hrs-inpt');
+    try{
+        const rate = Number(calcRateInpt.value);
+        const hrs = Number(calcHrsInpt.value);
+
+        const cost = calculateTotalCosts(rate, hrs);
+        //console.log(cost);
+
+        calcDiv.innerHTML = `<div id="calc-input-div">
+                <p class="calc-input-label">Hourly Rate: </p>
+                <input class="calc-input" id="calc-rate-inpt">
+                <p class="calc-input-label">Hours</p>
+                <input class="calc-input" id="calc-hrs-inpt">
+                <button id="calc-btn">
+                    <p class="calc-btn-text">Calculate</p>
+                </button>`;
+
+        calcDiv.innerHTML += `<h2 id="calc-result">Total Cost: $${cost}</h2>`;
+
+        const calcBtn = document.getElementById('calc-btn');
+        calcBtn.addEventListener('click', () => {
+            renderCalculation();
+        });
+    } catch (err) {
+        calcDiv.innerHTML = `<div id="calc-input-div">
+                <p class="calc-input-label">Hourly Rate: </p>
+                <input class="calc-input" id="calc-rate-inpt">
+                <p class="calc-input-label">Hours</p>
+                <input class="calc-input" id="calc-hrs-inpt">
+                <button id="calc-btn">
+                    <p class="calc-btn-text">Calculate</p>
+                </button>`;
+
+        calcDiv.innerHTML += `<h2 id='calc-result'>Invalid Input'</h2>
+                              <p>Enter numbers in input boxes</p>`;
+        const calcBtn = document.getElementById('calc-btn');
+        calcBtn.addEventListener('click', () => {
+            renderCalculation();
+        });                
+        //return;
+    }
+
+    /*const cost = calculateTotalCosts(rate, hrs);
+
+    calcDiv.innerHTML += `<h2 id="calc-result">Total Cost: $${cost}</h2>`;*/
 }
