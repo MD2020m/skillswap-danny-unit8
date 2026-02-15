@@ -100,7 +100,7 @@ describe('matchSkillsToUser', () => {
     const skills = [
         { 
             title: 'Python Tutoring',
-            catetory: 'Computer Science',
+            category: 'Computer Science',
             price: 20
         },
         {
@@ -136,9 +136,9 @@ describe('matchSkillsToUser', () => {
             maxPrice: 100
         };
 
-        const user1Matches = matchSkillsToUser(user1Needs, skills);
-        const user2Matches = matchSkillsToUser(user2Needs, skills);
-        const user3Matches = matchSkillsToUser(user3Needs, skills);
+        const user1Matches = skillswap.matchSkillsToUser(user1Needs, skills);
+        const user2Matches = skillswap.matchSkillsToUser(user2Needs, skills);
+        const user3Matches = skillswap.matchSkillsToUser(user3Needs, skills);
 
         expect(user1Matches).toHaveLength(1);
         expect(user1Matches[0].title).toBe('Python Tutoring');
@@ -156,7 +156,7 @@ describe('matchSkillsToUser', () => {
             maxPrice: 23
         };
 
-        const userMatches = matchSkillsToUser(userNeeds, skills);
+        const userMatches = skillswap.matchSkillsToUser(userNeeds, skills);
 
         expect(userMatches.length).toBe(3);
     });
@@ -167,9 +167,9 @@ describe('matchSkillsToUser', () => {
             maxPrice: 10
         };
 
-        const userMatches = matchSkillsToUser(userNeeds, skills);
+        const userMatches = skillswap.matchSkillsToUser(userNeeds, skills);
 
-        expect(userMatches).toBe([]);
+        expect(userMatches).toStrictEqual([]);
     });
 
     test('includes free skills', () => {
@@ -178,7 +178,7 @@ describe('matchSkillsToUser', () => {
             maxPrice: 5
         };
 
-        const userMatches = matchSkillsToUser(userNeeds, skills);
+        const userMatches = skillswap.matchSkillsToUser(userNeeds, skills);
 
         expect(userMatches).toHaveLength(1);
         expect(userMatches[0].price).toBe(0);
