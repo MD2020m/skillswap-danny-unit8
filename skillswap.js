@@ -28,7 +28,7 @@ export function matchSkillsToUser(userNeeds, skills) {
 
     const results = skills.filter((skill) => {
         if (skill.price <= maxPrice) {
-            if (category) {
+            if (category != '') {
                 if (skill.category == category) {
                     return skill;
                 }

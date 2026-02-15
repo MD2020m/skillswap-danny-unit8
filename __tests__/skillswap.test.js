@@ -152,7 +152,7 @@ describe('matchSkillsToUser', () => {
 
     test('filters by max price', () => {
         const userNeeds = {
-            category: null,
+            category: '',
             maxPrice: 23
         };
 

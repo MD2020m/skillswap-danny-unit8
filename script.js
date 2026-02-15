@@ -1,31 +1,31 @@
-import { filterSkillsByCategory, emptyResults, calculateTotalCosts } from "./skillswap.js";
+import { filterSkillsByCategory, emptyResults, calculateTotalCosts, matchSkillsToUser } from "./skillswap.js";
 let skills = [
     {
         title: 'Web Development',
         description: 'Web development tutoring. Offering help understanding and implementing HTML, CSS, and JavaScript',
         name: 'Danny Marshall',
-        price: '$25/hr',
+        price: 25,
         category: 'Computer Science'
     },
     {
         title: 'Programming Practicum',
         description: 'Offering tutoring to help you understand programming best practices and concepts such as loop based vs. functional programming, control structures, and object-oriented programming',
         name: 'Danny Marshall',
-        price: '$25/hr',
+        price: 25,
         category: 'Computer Science'
     },
     {
         title: 'Financial Math for Actuarial Exam FM',
         description: `I've pssed FM and you can too. I'm offering help understanding complicated financial math concepts and preparing for SOA Exam FM.`,
         name: 'Danny Marshall',
-        price: '$30/hr',
+        price: 30,
         category: 'Mathematics'
     },
     {
         title: 'Probability for Actuarial Exam P',
         description: `I've passed P and you can too. I'm offering tutoring to help you master probability and prepare for SOA Exam P.`,
         name: "Danny Marshall",
-        price: "$35/hr",
+        price: 35,
         category: 'Mathematics'
     }
 ];
@@ -51,6 +51,11 @@ calcBtn.addEventListener('click', () => {
     renderCalculation();
 });
 
+const matchBtn = document.getElementById('skll-match-btn');
+matchBtn.addEventListener('click', () => {
+    renderSkillMatch();
+});
+
 skillCards.forEach(card => {
 
     card.addEventListener('mouseover', () => {
@@ -71,7 +76,7 @@ function renderSkills(skills) {
                 <h2 class="skl-crd-title">${skill.title}</h2>
                 <p class="skl-crd-desc">${skill.description}</p>
                 <p class="skl-crd-name">${skill.name}</p>
-                <p class="skl-crd-price">${skill.price}</p>
+                <p class="skl-crd-price">$${skill.price}/hr</p>
             </div>
         </li>`;
     });
@@ -124,8 +129,69 @@ function renderCalculation() {
         });                
         //return;
     }
+}
 
-    /*const cost = calculateTotalCosts(rate, hrs);
+function renderSkillMatch() {
+    const skillMatchDiv = document.getElementById('skll-matcher-div');
+    
+    try{
+        const skllMatchCatInpt = document.getElementById('skll-match-cat-inpt');
+        const category = skllMatchCatInpt.value.trim();
 
-    calcDiv.innerHTML += `<h2 id="calc-result">Total Cost: $${cost}</h2>`;*/
+        const skillMatchPriceInpt = document.getElementById('skll-match-price-inpt');
+        const maxPrice = Number(skillMatchPriceInpt.value);
+
+        const userNeeds = {
+            category: category,
+            maxPrice: maxPrice
+        };
+
+        const matchedSkills = matchSkillsToUser(userNeeds, skills);
+        console.log(matchedSkills);
+
+        
+        skillMatchDiv.innerHTML = `<p class="skll-match-inpt-label">Category Preference:</p>
+                <input id="skll-match-cat-inpt" value="">
+                <p class="skll-match-inpt-label">Max Price:</p>
+                <input id="skll-match-price-inpt" value="">
+                <button id="skll-match-btn">
+                    <p class="skll-match-btn-txt">Match Skills</p>
+                </button>`;
+
+        if (matchedSkills.length > 0) {
+            skillMatchDiv.innerHTML += `<ul>`
+
+            matchedSkills.forEach(skill => {
+                skillMatchDiv.innerHTML += `
+                    <li class="offering-entry">
+                        <div class="skill-card">
+                            <h2 class="skl-crd-title">${skill.title}</h2>
+                            <p class="skl-crd-desc">${skill.description}</p>
+                            <p class="skl-crd-name">${skill.name}</p>
+                            <p class="skl-crd-price">$${skill.price}/hr</p>
+                        </div>
+                    </li>`;
+            });
+
+            skillMatchDiv.innerHTML += `</ul>`
+        } else {
+            skillMatchDiv.innerHTML += `<p id='no-sklls-match'>Sorry, no results match your search</p>`;
+        }
+
+        const matchBtn = document.getElementById('skll-match-btn');
+        matchBtn.addEventListener('click', () => {
+            renderSkillMatch();
+        });
+
+    } catch (err) {
+        skillMatchDiv.innerHTML = `<p class="skll-match-inpt-label">Category Preference:</p>
+                <input id="skll-match-cat-inpt" value="">
+                <p class="skll-match-inpt-label">Max Price:</p>
+                <input id="skll-match-price-inpt" value="">
+                <button id="skll-match-btn">
+                    <p class="skll-match-btn-txt">Match Skills</p>
+                </button>`;
+
+        skillMatchDiv.innerHTML += `<p id='invld-skll-match-inpt'>Something went wrong. Please try again later`;
+    }
 }
